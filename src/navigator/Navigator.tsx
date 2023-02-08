@@ -7,8 +7,8 @@ import Detail from '../screens/Detail';
 
 export type RootStackParams = {
   // Home: undefined;
-  Pokemon: {item: IPokemonDetails; color: string};
-  Detail: {item: IPokemonDetails; color: string};
+  Pokemon: {item: IPokemonDetails};
+  Detail: {item: IPokemonDetails};
 };
 
 const Stack = createStackNavigator<RootStackParams>();

@@ -6,10 +6,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {FC, useState, useEffect, useRef} from 'react';
+import React, {FC} from 'react';
 import {FadeInImage} from './FadeInImage';
 import {IPokemonDetails} from '../interfaces/IPokemonResponse';
-import ImageColors from 'react-native-image-colors';
+import useColor from '../hooks/useColor';
 
 interface Props {
   item: IPokemonDetails;
@@ -21,7 +21,9 @@ const PokeCard: FC<Props> = ({item, bgColor}) => {
   return (
     <View style={{...styles.container, backgroundColor: bgColor || 'grey'}}>
       <Text style={styles.title}>
-        {'#' + ' ' + item?.id + ' ' + item?.name}
+        {`#${item.id}  ${item.name.charAt(0).toUpperCase()}${item.name.slice(
+          1,
+        )}`}
       </Text>
       <FadeInImage uri={item?.picture || ''} style={styles.image} />
     </View>
@@ -49,34 +51,7 @@ const android: FC<Props> = ({onPress, item, bgColor}) => {
 };
 
 const Card: FC<Props> = ({item, onPress}) => {
-  const [bgColor, setBgColor] = useState('grey');
-  const isMounted = useRef(true);
-
-  useEffect(() => {
-    ImageColors.getColors(item.picture, {fallback: 'grey'}).then(colors => {
-      if (!isMounted.current) {
-        return;
-      }
-      switch (Platform.OS) {
-        case 'ios':
-          if (colors.platform === 'ios') {
-            setBgColor(colors.background || 'grey');
-          }
-          break;
-        case 'android':
-          if (colors.platform === 'android') {
-            setBgColor(colors.dominant || 'grey');
-          }
-          break;
-        default:
-          break;
-      }
-    });
-    return () => {
-      isMounted.current = false;
-    };
-  }, [bgColor, item.picture]);
-
+  const bgColor = useColor(item?.picture || '');
   return (
     <>
       {Platform.OS === 'ios'

@@ -6,10 +6,20 @@ import Card from '../components/Card';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParams} from '../navigator/Navigator';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {IPokemonDetails} from '../interfaces/IPokemonResponse';
+
+const PokemonDetailCard = (
+  item: IPokemonDetails,
+  navigation: () => void,
+  color?: string,
+) => {
+  return <Card item={item} bgColor={color} onPress={navigation} />;
+};
 
 const Pokemon = () => {
   const {simplePokemonList, loadPokemons} = usePokemonPaginated();
   const navigation = useNavigation<StackNavigationProp<RootStackParams>>();
+
   return (
     <View style={styles.globalMargin}>
       <Image
@@ -19,17 +29,13 @@ const Pokemon = () => {
       <FlatList
         data={simplePokemonList}
         keyExtractor={pokemon => pokemon.id.toString()}
-        renderItem={({item}) => (
-          <Card
-            item={item}
-            onPress={() =>
-              navigation.navigate('Detail', {
-                item,
-                color: 'red',
-              })
-            }
-          />
-        )}
+        renderItem={({item}) =>
+          PokemonDetailCard(item, () =>
+            navigation.navigate('Detail', {
+              item,
+            }),
+          )
+        }
         numColumns={2}
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={
