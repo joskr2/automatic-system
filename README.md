@@ -48,6 +48,10 @@ npx react-native run-android / or npx react-native run-ios
 Poekapp is very simple demo app.
 
 
+https://user-images.githubusercontent.com/22845673/217889149-404ff326-c271-4372-9e0e-9597a5685f2e.mp4
+
+
+
 
 ## License
 
