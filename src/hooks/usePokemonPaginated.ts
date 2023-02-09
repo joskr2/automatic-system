@@ -20,6 +20,8 @@ const usePokemonPaginated = () => {
     setSimplePokemonList([...simplePokemonList, ...newPokemonList]);
   }, [simplePokemonList]);
 
+
+
   const loadPokemons = React.useCallback(async () => {
     if (nextPageUrl.current === null) {
       return [];

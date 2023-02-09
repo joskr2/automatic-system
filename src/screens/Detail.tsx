@@ -6,6 +6,7 @@ import useColor from '../hooks/useColor';
 import BackButton from '../components/BackButton';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {FadeInImage} from '../components/FadeInImage';
+import DetailSection from '../components/DetailSection';
 
 interface Props extends StackScreenProps<RootStackParams, 'Detail'> {}
 
@@ -18,19 +19,25 @@ const Detail = ({
   const color = useColor(item?.picture);
   const {top} = useSafeAreaInsets();
   return (
-    <View style={{...styles.container, backgroundColor: color}}>
-      <Text style={{...styles.text, top: top + 5}}>
-        {`#${item.id}  ${item.name.charAt(0).toUpperCase()}${item.name.slice(
-          1,
-        )}`}
-      </Text>
-      <FadeInImage uri={item.picture} style={styles.image} />
-      <BackButton onPress={() => navigation.pop()} />
+    <View style={styles.mainContainer}>
+      <View style={{...styles.container, backgroundColor: color}}>
+        <Text style={{...styles.text, top: top + 5}}>
+          {`#${item.id}  ${item.name.charAt(0).toUpperCase()}${item.name.slice(
+            1,
+          )}`}
+        </Text>
+        <FadeInImage uri={item.picture} style={styles.image} />
+        <BackButton onPress={() => navigation.pop()} />
+      </View>
+      <DetailSection id={item?.id} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+  },
   container: {
     height: 370,
     zIndex: 999,
